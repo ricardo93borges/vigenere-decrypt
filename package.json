@@ -1,0 +1,39 @@
+{
+  "name": "vigenere-decrypt",
+  "version": "1.0.0",
+  "description": "Vigenere Decrypt",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "nodemon --watch './src/**/*.ts' --exec 'ts-node' ./src/index.ts",
+    "build": "rm -rf lib && tsc",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "lint": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint --fix 'src/**/*.ts'"
+  },
+  "author": "Ricardo Borges",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.1.0",
+    "moment-timezone": "^0.5.25"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/dotenv": "^6.1.1",
+    "@types/jest": "^25.1.4",
+    "@types/moment-timezone": "^0.5.12",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.1.0",
+    "nodemon": "^1.19.4",
+    "prettier": "1.19.1",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  }
+}
