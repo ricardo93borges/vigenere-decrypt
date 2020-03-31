@@ -1,5 +1,6 @@
 import FileManager from './FileManager'
 import calculateIC from './ic'
+import { alphabet } from './alphabet'
 
 interface PossibleLengths {
   [key: number]: number;
@@ -46,11 +47,55 @@ function findKeyLength(cipherText: string): number {
   }
 
   const sorted = sort(possibleLengths)
-  return sorted[0][0]
+  return parseInt(sorted[0][0], 10)
 }
 
-const fileManager = new FileManager(`${__dirname}/cipher2.txt`)
+function frequencyAnalysis(substring: string): { [key: string]: number } {
+  const ocurrencies: { [key: string]: number } = {}
+
+  for (let j = 0; j < alphabet.length; j++) {
+    ocurrencies[alphabet[j]] = 0
+  }
+
+  for (let i = 0; i < substring.length; i++) {
+    ocurrencies[substring[i]]++
+  }
+
+  for (let j = 0; j < alphabet.length; j++) {
+    ocurrencies[alphabet[j]] = ocurrencies[alphabet[j]] / substring.length
+  }
+
+  return ocurrencies
+}
+
+const fileManager = new FileManager(`${__dirname}/cipher.txt`)
 let cipherText = fileManager.read()
 cipherText = cipherText.toLowerCase().split(' ').join('').trim()
 
+// find key length
 const keylength = findKeyLength(cipherText)
+console.log('keylength', keylength)
+// frequency analysis
+let key = ''
+let i = 0
+while (i < keylength) {
+  let currentIndex = i
+  const letters = []
+  letters.push(cipherText[currentIndex])
+
+  while (currentIndex + keylength < cipherText.length) {
+    currentIndex = currentIndex + keylength
+    letters.push(cipherText[currentIndex])
+  }
+
+  const substring = letters.join('')
+  const frequencies = frequencyAnalysis(substring)
+
+  const sorted = Object.entries(frequencies).sort((a, b) => a[1] < b[1] ? 1 : -1)
+  //console.log(sorted)
+  key = key.concat(sorted[0][0])
+  i++
+}
+
+
+console.log(key)
