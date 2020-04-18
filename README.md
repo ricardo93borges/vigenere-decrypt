@@ -21,4 +21,12 @@ Run the following
 
 `npm i`
 
+The cipher must be written in src/cipher.txt.
+
+To start the programa run:
+
 `npm start`
+
+The key length will be determined automatically.
+
+The for each index of the key will be presented the most likely character and asked to choose one.
