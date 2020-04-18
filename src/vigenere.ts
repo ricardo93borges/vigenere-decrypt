@@ -9,8 +9,18 @@ interface VigenereTable {
   [key: string]: string;
 }
 
+interface Key {
+  char: string;
+  frequency: number;
+}
+
+export interface Keys {
+  [key: number]: Key[];
+}
+
 export default class Vigenere {
   private cipher: string
+  public keylength?: number
   private table: VigenereTable = {
     'a': 'abcdefghijklmnopqrstuvwxyz',
     'b': 'bcdefghijklmnopqrstuvwxyza',
@@ -140,7 +150,9 @@ export default class Vigenere {
     }
 
     const sorted = this.sort(possibleLengths)
-    return parseInt(sorted[0][0], 10)
+    const keylength = parseInt(sorted[0][0], 10)
+    this.keylength = keylength
+    return keylength
   }
 
   frequencyAnalysis(substring: string): { [key: string]: number } {
@@ -161,15 +173,15 @@ export default class Vigenere {
     return ocurrencies
   }
 
-  findKey(): string {
+  findKey(): Keys {
     const keylength = this.findKeyLength(this.cipher)
-    console.log('keylength', keylength)
 
     // frequency analysis
-    let key = ''
+    const keys: Keys = {}
     let i = 0
     while (i < keylength) {
       let currentIndex = i
+      keys[i] = []
       const letters = []
       letters.push(this.cipher[currentIndex])
 
@@ -182,11 +194,15 @@ export default class Vigenere {
       const frequencies = this.frequencyAnalysis(substring)
 
       const sorted = Object.entries(frequencies).sort((a, b) => a[1] < b[1] ? 1 : -1)
-      key = key.concat(sorted[0][0])
+
+      keys[i].push({ char: sorted[0][0], frequency: sorted[0][1] })
+      keys[i].push({ char: sorted[1][0], frequency: sorted[1][1] })
+      keys[i].push({ char: sorted[2][0], frequency: sorted[2][1] })
+
       i++
     }
 
-    return key
+    return keys
   }
 
 }
