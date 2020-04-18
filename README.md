@@ -1,4 +1,4 @@
-# event-based-simulator
+# vigenere-decrypt
 
 ## Dependencies
 
