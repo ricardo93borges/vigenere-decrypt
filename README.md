@@ -29,4 +29,4 @@ To start the programa run:
 
 The key length will be determined automatically.
 
-The for each index of the key will be presented the most likely character and asked to choose one.
+Then for each index of the key will be presented the most likely character and asked to choose one.
